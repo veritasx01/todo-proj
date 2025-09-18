@@ -1,18 +1,18 @@
-import { todoService } from '../../services/todo.service.js';
+import { todoService } from "../../services/todo.service.js";
 import {
   SET_TODOS,
   ADD_TODO,
   REMOVE_TODO,
   UPDATE_TODO,
-} from '../reducers/todo.reducer.js';
-import { store } from '../store.js';
+} from "../reducers/todo.reducer.js";
+import { store } from "../store.js";
 
 export function queryTodos(filterBy) {
   return todoService
     .query(filterBy)
     .then((todos) => store.dispatch({ type: SET_TODOS, todos }))
     .catch((error) => {
-      console.log('cannot load todos, error: ', error);
+      console.log("cannot load todos, error: ", error);
       throw error;
     });
 }
@@ -36,7 +36,7 @@ export function saveTodo(todo) {
       return savedTodo;
     })
     .catch((error) => {
-      console.log('error saving todo, error: ', error);
+      console.log("error saving todo, error: ", error);
       throw error;
     });
 }

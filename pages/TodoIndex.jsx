@@ -7,7 +7,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
 import {
   queryTodos,
   removeTodo,
-  saveTodo
+  saveTodo,
 } from "../store/actions/todo.action.js";
 
 const { useSelector, useDispatch } = ReactRedux;
