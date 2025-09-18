@@ -37,6 +37,7 @@ export function TodoIndex() {
   }, [filterBy]);
 
   function onRemoveTodo(todoId) {
+    if (!confirm(`delete todo with id: (${todoId})?`)) return;
     removeTodo(todoId);
     //todoService
     //  .remove(todoId)

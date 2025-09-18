@@ -1,7 +1,7 @@
-import { utilService } from "./util.service.js";
-import { storageService } from "./async-storage.service.js";
+import { utilService } from './util.service.js';
+import { storageService } from './async-storage.service.js';
 
-const TODO_KEY = "todoDB";
+const TODO_KEY = 'todoDB';
 _createTodos();
 
 export const todoService = {
@@ -19,13 +19,25 @@ window.cs = todoService;
 
 function query(filterBy = {}) {
   return storageService.query(TODO_KEY).then((todos) => {
-    if (filterBy.txt) {
-      const regExp = new RegExp(filterBy.txt, "i");
+    if (filterBy.txt && typeof filterBy.txt === 'string') {
+      const regExp = new RegExp(filterBy.txt, 'i');
       todos = todos.filter((todo) => regExp.test(todo.txt));
     }
 
-    if (filterBy.importance) {
+    if (filterBy.importance && typeof filterBy.importance === 'number') {
       todos = todos.filter((todo) => todo.importance >= filterBy.importance);
+    }
+
+    const statusExistsAndIsString =
+      filterBy.todoStatus && typeof filterBy.todoStatus === 'string';
+    if (statusExistsAndIsString && filterBy.todoStatus != 'all') {
+      if (filterBy.todoStatus === 'active') {
+        todos = todos.filter((todo) => !todo.isDone);
+      } else if (filterBy.todoStatus === 'done') {
+        todos = todos.filter((todo) => todo.isDone);
+      } else {
+        throw Error('Unknown todo status given to query function');
+      }
     }
 
     return todos;
@@ -55,19 +67,19 @@ function save(todo) {
   }
 }
 
-function getEmptyTodo(txt = "", importance = 5) {
+function getEmptyTodo(txt = '', importance = 5) {
   return { txt, importance, isDone: false };
 }
 
 function getDefaultFilter() {
-  return { txt: "", importance: 0 };
+  return { txt: '', importance: 0 };
 }
 
 function getFilterFromSearchParams(searchParams) {
   const defaultFilter = getDefaultFilter();
   const filterBy = {};
   for (const field in defaultFilter) {
-    filterBy[field] = searchParams.get(field) || "";
+    filterBy[field] = searchParams.get(field) || '';
   }
   return filterBy;
 }
@@ -87,11 +99,11 @@ function _createTodos() {
   let todos = utilService.loadFromStorage(TODO_KEY);
   if (!todos || !todos.length) {
     todos = [];
-    const txts = ["Learn React", "Master CSS", "Practice Redux"];
+    const txts = ['Learn React', 'Master CSS', 'Practice Redux'];
     for (let i = 0; i < 20; i++) {
       const txt = txts[utilService.getRandomIntInclusive(0, txts.length - 1)];
       todos.push(
-        _createTodo(txt + (i + 1), utilService.getRandomIntInclusive(1, 10)),
+        _createTodo(txt + (i + 1), utilService.getRandomIntInclusive(1, 10))
       );
     }
     utilService.saveToStorage(TODO_KEY, todos);
@@ -127,7 +139,7 @@ function _getTodoCountByImportanceMap(todos) {
       else map.urgent++;
       return map;
     },
-    { low: 0, normal: 0, urgent: 0 },
+    { low: 0, normal: 0, urgent: 0 }
   );
   return todoCountByImportanceMap;
 }

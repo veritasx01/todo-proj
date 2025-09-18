@@ -34,8 +34,7 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
     ev.preventDefault();
     onSetFilterBy(filterByToEdit);
   }
-
-  const { txt, importance } = filterByToEdit;
+  const { txt, importance, todoStatus } = filterByToEdit;
   return (
     <section className="todo-filter">
       <h2>Filter Todos</h2>
@@ -57,7 +56,11 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
           id="importance"
           name="importance"
         />
-
+        <select name="todoStatus" value={todoStatus} onChange={handleChange}>
+          <option value={"all"}>All</option>
+          <option value={"active"}>Active</option>
+          <option value={"done"}>Done</option>
+        </select>
         <button hidden>Set Filter</button>
       </form>
     </section>

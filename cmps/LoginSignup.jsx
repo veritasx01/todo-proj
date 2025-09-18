@@ -5,6 +5,7 @@ const { useState } = React;
 
 export function LoginSignup({ onSetUser }) {
   const [isSignup, setIsSignUp] = useState(false);
+  // TODO: make user into global state
   const [credentials, setCredentials] = useState(
     userService.getEmptyCredentials(),
   );
