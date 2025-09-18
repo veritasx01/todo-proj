@@ -1,31 +1,38 @@
 const { useState } = React;
 const { Link, NavLink } = ReactRouterDOM;
 const { useNavigate } = ReactRouter;
+const { useSelector } = ReactRedux;
 
 import { userService } from "../services/user.service.js";
 import { UserMsg } from "./UserMsg.jsx";
 import { LoginSignup } from "./LoginSignup.jsx";
 import { showErrorMsg } from "../services/event-bus.service.js";
+import { setCurrentUser, clearCurrentUser } from "../store/actions/user.action.js";
 
 export function AppHeader() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(userService.getLoggedinUser());
+  //const [user, setUser] = useState(userService.getLoggedinUser());
+  const user = useSelector((state) => state.userModule.user);
 
   function onLogout() {
-    userService
-      .logout()
-      .then(() => {
-        onSetUser(null);
-      })
-      .catch((err) => {
-        showErrorMsg("OOPs try again");
-      });
+    clearCurrentUser()
+    //userService
+    //  .logout()
+    //  .then(() => {
+    //    onSetUser(null);
+    //  })
+    //  .catch((err) => {
+    //    showErrorMsg("OOPs try again");
+    //  });
   }
 
   function onSetUser(user) {
-    setUser(user);
+    setCurrentUser(user);
     navigate("/");
   }
+
+  console.log("user: ",user);
+
   return (
     <header className="app-header full main-layout">
       <section className="header-container">

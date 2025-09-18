@@ -1,4 +1,3 @@
-const { useState } = React;
 export function TodoPreview({ todo, onToggleTodo }) {
   return (
     <article className="todo-preview">

@@ -1,13 +1,14 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
 import { userService } from "../services/user.service.js";
+import { setCurrentUser, clearCurrentUser } from "../store/actions/user.action.js";
 
 const { useState } = React;
+const { useSelector, useDispatch } = ReactRedux;
 
 export function LoginSignup({ onSetUser }) {
   const [isSignup, setIsSignUp] = useState(false);
-  // TODO: make user into global state
   const [credentials, setCredentials] = useState(
-    userService.getEmptyCredentials(),
+    userService.getEmptyCredentials()
   );
 
   function handleChange({ target }) {
@@ -27,8 +28,8 @@ export function LoginSignup({ onSetUser }) {
   function login(credentials) {
     userService
       .login(credentials)
-      .then(onSetUser)
-      .then(() => {
+      .then((cred) => {
+        onSetUser(cred);
         showSuccessMsg("Logged in successfully");
       })
       .catch((err) => {
@@ -54,7 +55,6 @@ export function LoginSignup({ onSetUser }) {
         <input
           type="text"
           name="username"
-          value={credentials.username}
           placeholder="Username"
           onChange={handleChange}
           required
@@ -63,7 +63,6 @@ export function LoginSignup({ onSetUser }) {
         <input
           type="password"
           name="password"
-          value={credentials.password}
           placeholder="Password"
           onChange={handleChange}
           required
@@ -73,7 +72,6 @@ export function LoginSignup({ onSetUser }) {
           <input
             type="text"
             name="fullname"
-            value={credentials.fullname}
             placeholder="Full name"
             onChange={handleChange}
             required

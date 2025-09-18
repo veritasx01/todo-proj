@@ -56,7 +56,12 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
           id="importance"
           name="importance"
         />
-        <select name="todoStatus" value={todoStatus} onChange={handleChange}>
+        <select
+          name="todoStatus"
+          value={todoStatus}
+          onChange={handleChange}
+          selected="selected"
+        >
           <option value={"all"}>All</option>
           <option value={"active"}>Active</option>
           <option value={"done"}>Done</option>
