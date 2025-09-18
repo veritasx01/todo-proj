@@ -34,6 +34,7 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
     ev.preventDefault();
     onSetFilterBy(filterByToEdit);
   }
+
   const { txt, importance, todoStatus } = filterByToEdit;
   return (
     <section className="todo-filter">

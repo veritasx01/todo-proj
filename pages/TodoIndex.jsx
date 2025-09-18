@@ -27,51 +27,16 @@ export function TodoIndex() {
   useEffect(() => {
     setSearchParams(filterBy);
     queryTodos(filterBy);
-    //todoService
-    //  .query(filterBy)
-    //  .then((todos) => setTodos(todos))
-    //  .catch((err) => {
-    //    console.eror("err:", err);
-    //    showErrorMsg("Cannot load todos");
-    //  });
   }, [filterBy]);
 
   function onRemoveTodo(todoId) {
     if (!confirm(`delete todo with id: (${todoId})?`)) return;
     removeTodo(todoId);
-    //todoService
-    //  .remove(todoId)
-    //  .then(() => {
-    //    setTodos((prevTodos) =>
-    //      prevTodos.filter((todo) => todo._id !== todoId),
-    //    );
-    //    showSuccessMsg(`Todo removed`);
-    //  })
-    //  .catch((err) => {
-    //    console.log("err:", err);
-    //    showErrorMsg("Cannot remove todo " + todoId);
-    //  });
   }
 
   function onToggleTodo(todo) {
     const todoToSave = { ...todo, isDone: !todo.isDone };
     saveTodo(todoToSave);
-    //todoService
-    //  .save(todoToSave)
-    //  .then((savedTodo) => {
-    //    setTodos((prevTodos) =>
-    //      prevTodos.map((currTodo) =>
-    //        currTodo._id !== todo._id ? currTodo : { ...savedTodo },
-    //      ),
-    //    );
-    //    showSuccessMsg(
-    //      `Todo is ${savedTodo.isDone ? "done" : "back on your list"}`,
-    //    );
-    //  })
-    //  .catch((err) => {
-    //    console.log("err:", err);
-    //    showErrorMsg("Cannot toggle todo " + todoId);
-    //  });
   }
 
   if (!todos) return <div>Loading...</div>;
