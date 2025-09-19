@@ -35,7 +35,8 @@ export function TodoIndex() {
     removeTodo(todoId);
   }
 
-  function onToggleTodo(todo) {
+  async function onToggleTodo(todo) {
+    if (!todo.isDone) incrementUserBalance();
     const todoToSave = { ...todo, isDone: !todo.isDone };
     saveTodo(todoToSave);
   }

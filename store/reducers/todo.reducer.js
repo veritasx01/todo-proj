@@ -16,13 +16,13 @@ export function todoReducer(state = initState, action) {
     case REMOVE_TODO:
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo._id !== action.todoId),
+        todos: state.todos.filter((todo) => todo._id !== action.todoId)
       };
     case UPDATE_TODO:
       return {
         ...state,
         todos: state.todos.map((todo) =>
-          todo._id === action.todoId ? action.todo : todo,
+          todo._id === action.todo._id ? action.todo : todo,
         ),
       };
     default:

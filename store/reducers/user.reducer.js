@@ -13,6 +13,9 @@ export function userReducer(state = initState, action) {
     case CLEAR_USER:
       return { ...state, user: null };
     case INCREMENT_USER_BALANCE:
+      if (!state.user) {
+        return state;
+      }
       return {
         ...state,
         user: { ...state.user, balance: state.user.balance + action.amount },

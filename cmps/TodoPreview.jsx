@@ -7,7 +7,7 @@ export function TodoPreview({ todo, onToggleTodo }) {
       <h4>Todo Importance: {todo.importance}</h4>
       <input type="color"></input>
       <img src={`../assets/img/todo.png`} alt="" />
-      <input type="checkbox"></input>
+      <input type="checkbox" checked={todo.isDone} onChange={onToggleTodo}></input>
     </article>
   );
 }
