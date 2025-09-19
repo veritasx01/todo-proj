@@ -1,4 +1,4 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 const { Link, NavLink } = ReactRouterDOM;
 const { useNavigate } = ReactRouter;
 const { useSelector } = ReactRedux;
@@ -11,28 +11,25 @@ import { setCurrentUser, clearCurrentUser } from "../store/actions/user.action.j
 
 export function AppHeader() {
   const navigate = useNavigate();
-  //const [user, setUser] = useState(userService.getLoggedinUser());
   const user = useSelector((state) => state.userModule.user);
+
+  useEffect(() => {
+    if (user) {
+      userService.saveUser(user);
+    }
+  }, [user]);
 
   function onLogout() {
     clearCurrentUser()
-    //userService
-    //  .logout()
-    //  .then(() => {
-    //    onSetUser(null);
-    //  })
-    //  .catch((err) => {
-    //    showErrorMsg("OOPs try again");
-    //  });
   }
 
-  function onSetUser(user) {
-    setCurrentUser(user);
+  function onSetUser(newUser) {
+    setCurrentUser(newUser);
     navigate("/");
   }
 
   console.log("user: ",user);
-
+  if (user) console.log(user.balance);
   return (
     <header className="app-header full main-layout">
       <section className="header-container">
@@ -41,6 +38,7 @@ export function AppHeader() {
           <section>
             <Link to={`/user/${user._id}`}>Hello {user.fullname}</Link>
             <button onClick={onLogout}>Logout</button>
+            <h1>balance: {user.balance}</h1>
           </section>
         ) : (
           <section>

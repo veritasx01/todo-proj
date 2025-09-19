@@ -9,6 +9,7 @@ import {
   removeTodo,
   saveTodo,
 } from "../store/actions/todo.action.js";
+import { incrementUserBalance } from "../store/actions/user.action.js";
 
 const { useSelector, useDispatch } = ReactRedux;
 const { useState, useEffect } = React;
@@ -43,6 +44,7 @@ export function TodoIndex() {
   return (
     <section className="todo-index">
       <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
+      <button onClick={() => {incrementUserBalance()}}>increment</button>
       <div>
         <Link to="/todo/edit" className="btn">
           Add Todo

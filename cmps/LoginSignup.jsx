@@ -1,9 +1,7 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
 import { userService } from "../services/user.service.js";
-import { setCurrentUser, clearCurrentUser } from "../store/actions/user.action.js";
 
 const { useState } = React;
-const { useSelector, useDispatch } = ReactRedux;
 
 export function LoginSignup({ onSetUser }) {
   const [isSignup, setIsSignUp] = useState(false);
