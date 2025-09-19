@@ -18,7 +18,7 @@ export function UserDetails() {
   useEffect(() => {
     console.log("logged user: ", loggedUser);
     console.log("current user: ", localUser);
-    setLocked(localUser == loggedUser);
+    setLocked(_.isEqual(localUser, loggedUser));
   }, [loggedUser]);
 
   function handleChange({ target }) {
@@ -45,7 +45,6 @@ export function UserDetails() {
     e.preventDefault();
     setCurrentUser(localUser);
     userService.saveUser(localUser);
-
   };
 
   if (!localUser) {
