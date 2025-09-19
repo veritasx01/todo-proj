@@ -10,20 +10,22 @@ import {
   saveTodo,
 } from "../store/actions/todo.action.js";
 import { incrementUserBalance } from "../store/actions/user.action.js";
+import { setFilterBy } from "../store/actions/filter.action.js";
 
 const { useSelector, useDispatch } = ReactRedux;
 const { useState, useEffect } = React;
 const { Link, useSearchParams } = ReactRouterDOM;
 
 export function TodoIndex() {
-  //const [todos, setTodos] = useState(null);
   const todos = useSelector((state) => state.todoModule.todos);
-  // Special hook for accessing search-params:
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const defaultFilter = todoService.getFilterFromSearchParams(searchParams);
+  useEffect(() => {
+    const defaultFilter = todoService.getFilterFromSearchParams(searchParams);
+    setFilterBy(defaultFilter);
+  }, []);
 
-  const [filterBy, setFilterBy] = useState(defaultFilter);
+  const filterBy = useSelector((state) => state.filterModule.filterBy);
 
   useEffect(() => {
     setSearchParams(filterBy);
@@ -45,7 +47,13 @@ export function TodoIndex() {
   return (
     <section className="todo-index">
       <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
-      <button onClick={() => {incrementUserBalance()}}>increment</button>
+      <button
+        onClick={() => {
+          incrementUserBalance();
+        }}
+      >
+        increment
+      </button>
       <div>
         <Link to="/todo/edit" className="btn">
           Add Todo

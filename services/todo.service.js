@@ -72,7 +72,7 @@ function getEmptyTodo(txt = '', importance = 5) {
 }
 
 function getDefaultFilter() {
-  return { txt: '', importance: 0 };
+  return { txt: '', importance: 0, todoStatus: 'all' };
 }
 
 function getFilterFromSearchParams(searchParams) {

@@ -5,7 +5,7 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
 
   useEffect(() => {
     // Notify parent
-    onSetFilterBy(filterByToEdit);
+    // onSetFilterBy(filterByToEdit);
   }, [filterByToEdit]);
 
   function handleChange({ target }) {
@@ -61,7 +61,6 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
           name="todoStatus"
           value={todoStatus}
           onChange={handleChange}
-          selected="selected"
         >
           <option value={"all"}>All</option>
           <option value={"active"}>Active</option>

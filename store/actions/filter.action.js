@@ -2,7 +2,7 @@ import { store } from '../store.js';
 import { SET_FILTER, CLEAR_FILTER } from '../reducers/filter.reducer.js';
 
 export function setFilterBy(filterBy) {
-  store.dispatch({ type: SET_FILTER, filterBy });
+  store.dispatch({ type: SET_FILTER, filterBy: filterBy });
 }
 
 export function clearFilterBy() {

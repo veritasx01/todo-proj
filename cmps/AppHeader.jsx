@@ -7,7 +7,10 @@ import { userService } from "../services/user.service.js";
 import { UserMsg } from "./UserMsg.jsx";
 import { LoginSignup } from "./LoginSignup.jsx";
 import { showErrorMsg } from "../services/event-bus.service.js";
-import { setCurrentUser, clearCurrentUser } from "../store/actions/user.action.js";
+import {
+  setCurrentUser,
+  clearCurrentUser,
+} from "../store/actions/user.action.js";
 
 export function AppHeader() {
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ export function AppHeader() {
   }, [user]);
 
   function onLogout() {
-    clearCurrentUser()
+    clearCurrentUser();
   }
 
   function onSetUser(newUser) {
@@ -28,8 +31,6 @@ export function AppHeader() {
     navigate("/");
   }
 
-  console.log("user: ",user);
-  if (user) console.log(user.balance);
   return (
     <header className="app-header full main-layout">
       <section className="header-container">
