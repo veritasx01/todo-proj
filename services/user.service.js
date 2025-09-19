@@ -17,8 +17,9 @@ function query() {
   return storageService.query(STORAGE_KEY);
 }
 
-function getById(userId) {
-  return storageService.get(STORAGE_KEY, userId);
+async function getById(userId) {
+  let temp = await storageService.get(STORAGE_KEY, userId);
+  return temp;
 }
 
 function login({ username, password }) {
@@ -34,6 +35,10 @@ function signup({ username, password, fullname }) {
   user.createdAt = user.updatedAt = Date.now();
   user.balance = 10000;
   user.activities = []; // activities: [{txt: 'Added a Todo', at: 1523873242735}]
+  user.prefs = {
+    color: '#000000',
+    bgColor: '#ffffff',
+  };
 
   return storageService.post(STORAGE_KEY, user).then(_setLoggedinUser);
 }
@@ -55,11 +60,7 @@ function getLoggedinUser() {
 }
 
 function _setLoggedinUser(user) {
-  const userToSave = {
-    _id: user._id,
-    fullname: user.fullname,
-    balance: user.balance,
-  };
+  const userToSave = { ...user };
   sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave));
   return userToSave;
 }

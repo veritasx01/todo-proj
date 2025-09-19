@@ -14,10 +14,12 @@ function query(entityType, delay = 10) {
 function get(entityType, entityId) {
   return query(entityType).then((entities) => {
     const entity = entities.find((entity) => entity._id === entityId);
-    if (!entity)
+    if (!entity) {
+      return null;
       throw new Error(
         `Get failed, cannot find entity with id: ${entityId} in: ${entityType}`,
       );
+    }
     return entity;
   });
 }
@@ -36,10 +38,12 @@ function put(entityType, updatedEntity) {
     const idx = entities.findIndex(
       (entity) => entity._id === updatedEntity._id,
     );
-    if (idx < 0)
+    if (idx < 0) {
+      return null;
       throw new Error(
         `Update failed, cannot find entity with id: ${updatedEntity._id} in: ${entityType}`,
       );
+    }
     const entityToUpdate = { ...entities[idx], ...updatedEntity };
     entities.splice(idx, 1, entityToUpdate);
     _save(entityType, entities);
