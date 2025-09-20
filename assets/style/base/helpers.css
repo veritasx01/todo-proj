@@ -20,6 +20,10 @@
   align-items: center;
 }
 
+.max-h {
+  height: 100vh;
+}
+
 /* text helpers */
 
 .colored-text {

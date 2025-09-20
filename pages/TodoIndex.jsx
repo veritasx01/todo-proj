@@ -3,7 +3,6 @@ import { TodoList } from "../cmps/TodoList.jsx";
 import { DataTable } from "../cmps/data-table/DataTable.jsx";
 import { todoService } from "../services/todo.service.js";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
-//import { queryTodos, removeTodo, saveTodo} from "../store/actions/todo.action.js";
 import {
   queryTodos,
   removeTodo,
@@ -11,6 +10,7 @@ import {
 } from "../store/actions/todo.action.js";
 import { incrementUserBalance } from "../store/actions/user.action.js";
 import { setFilterBy } from "../store/actions/filter.action.js";
+import { setIsLoading } from "../store/actions/loading.action.js";
 
 const { useSelector, useDispatch } = ReactRedux;
 const { useState, useEffect } = React;
@@ -18,6 +18,7 @@ const { Link, useSearchParams } = ReactRouterDOM;
 
 export function TodoIndex() {
   const todos = useSelector((state) => state.todoModule.todos);
+  const isLoading = useSelector(state => state.loadingModule.loading);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -29,7 +30,9 @@ export function TodoIndex() {
 
   useEffect(() => {
     setSearchParams(filterBy);
+    setIsLoading(true);
     queryTodos(filterBy);
+    setIsLoading(false);
   }, [filterBy]);
 
   function onRemoveTodo(todoId) {
@@ -42,8 +45,14 @@ export function TodoIndex() {
     const todoToSave = { ...todo, isDone: !todo.isDone };
     saveTodo(todoToSave);
   }
-
-  if (!todos) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex align-center justify-center max-h">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+  if (!todos) return <div>Loading</div>;
   return (
     <section className="todo-index">
       <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
