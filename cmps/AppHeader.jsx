@@ -6,6 +6,7 @@ const { useSelector } = ReactRedux;
 import { userService } from "../services/user.service.js";
 import { UserMsg } from "./UserMsg.jsx";
 import { LoginSignup } from "./LoginSignup.jsx";
+import { ProgressBar } from "./ProgressBar.jsx";
 import { showErrorMsg } from "../services/event-bus.service.js";
 import {
   setCurrentUser,
@@ -35,6 +36,7 @@ export function AppHeader() {
     <header className="app-header full main-layout">
       <section className="header-container">
         <h1>React Todo App</h1>
+        <ProgressBar></ProgressBar>
         {user ? (
           <section>
             <Link to={`/user/${user._id}`}>Hello {user.fullname}</Link>
