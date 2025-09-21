@@ -11,7 +11,8 @@ export function TodoList({ todos, onRemoveTodo, onToggleTodo }) {
   return (
     <ul className="todo-list">
       {todos.map((todo) => (
-        <li key={todo._id} style={getDynamicStyle(todo.isDone)}>
+        <li key={todo._id} className="todo-card" style={getDynamicStyle(todo.isDone)}>
+          <input type="checkbox" className="todo-checkbox" checked={todo.isDone} onChange={() => onToggleTodo(todo)}></input>
           <TodoPreview todo={todo} onToggleTodo={() => onToggleTodo(todo)} />
           <section>
             <button onClick={() => onRemoveTodo(todo._id)}>Remove</button>
