@@ -23,7 +23,7 @@ function query(filterBy = {}) {
       const regExp = new RegExp(filterBy.txt, 'i');
       todos = todos.filter((todo) => regExp.test(todo.txt));
     }
-
+    if (typeof filterBy.importance === 'string') filterBy.importance = parseInt(filterBy.importance);
     if (filterBy.importance && typeof filterBy.importance === 'number') {
       todos = todos.filter((todo) => todo.importance >= filterBy.importance);
     }

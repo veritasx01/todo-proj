@@ -18,22 +18,19 @@ const { Link, useSearchParams } = ReactRouterDOM;
 
 export function TodoIndex() {
   const todos = useSelector((state) => state.todoModule.todos);
-  const isLoading = useSelector(state => state.loadingModule.loading);
+  const isLoading = useSelector((state) => state.loadingModule.loading);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const defaultFilter = todoService.getFilterFromSearchParams(searchParams);
     setFilterBy(defaultFilter);
-  }, []);
+    setIsLoading(true);
+    queryTodos(defaultFilter).then(() => {
+      setIsLoading(false);
+    });
+  }, [searchParams]);
 
   const filterBy = useSelector((state) => state.filterModule.filterBy);
-
-  useEffect(() => {
-    setSearchParams(filterBy);
-    setIsLoading(true);
-    queryTodos(filterBy);
-    setIsLoading(false);
-  }, [filterBy]);
 
   function onRemoveTodo(todoId) {
     if (!confirm(`delete todo with id: (${todoId})?`)) return;
@@ -55,7 +52,7 @@ export function TodoIndex() {
   if (!todos) return <div>Loading</div>;
   return (
     <section className="todo-index">
-      <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
+      <TodoFilter filterBy={filterBy} onSetFilterBy={(f) => setSearchParams(f)} />
       <button
         onClick={() => {
           incrementUserBalance();
