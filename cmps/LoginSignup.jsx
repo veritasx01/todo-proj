@@ -79,7 +79,7 @@ export function LoginSignup({ onSetUser }) {
       </form>
 
       <div className="btns">
-        <a href="#" onClick={() => setIsSignUp(!isSignup)}>
+        <a onClick={() => setIsSignUp(!isSignup)}>
           {isSignup ? "Already a member? Login" : "New user? Signup here"}
         </a>
       </div>
