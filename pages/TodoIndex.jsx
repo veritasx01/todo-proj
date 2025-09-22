@@ -12,9 +12,9 @@ import { incrementUserBalance } from "../store/actions/user.action.js";
 import { setFilterBy } from "../store/actions/filter.action.js";
 import { setIsLoading } from "../store/actions/loading.action.js";
 
-const { useSelector, useDispatch } = ReactRedux;
-const { useState, useEffect } = React;
-const { Link, useSearchParams } = ReactRouterDOM;
+const { useSelector } = ReactRedux;
+const { useEffect } = React;
+const { useSearchParams } = ReactRouterDOM;
 
 export function TodoIndex() {
   const todos = useSelector((state) => state.todoModule.todos);
@@ -42,6 +42,7 @@ export function TodoIndex() {
     const todoToSave = { ...todo, isDone: !todo.isDone };
     saveTodo(todoToSave);
   }
+  
   if (isLoading) {
     return (
       <div className="flex align-center justify-center max-h">
@@ -49,22 +50,14 @@ export function TodoIndex() {
       </div>
     );
   }
+
   if (!todos) return <div>Loading</div>;
   return (
     <section className="todo-index">
-      <TodoFilter filterBy={filterBy} onSetFilterBy={(f) => setSearchParams(f)} />
-      <button
-        onClick={() => {
-          incrementUserBalance();
-        }}
-      >
-        increment
-      </button>
-      <div>
-        <Link to="/todo/edit" className="btn">
-          Add Todo
-        </Link>
-      </div>
+      <TodoFilter
+        filterBy={filterBy}
+        onSetFilterBy={(f) => setSearchParams(f)}
+      />
       <h2>Todos List</h2>
       <TodoList
         todos={todos}

@@ -1,4 +1,5 @@
 const { useState, useEffect } = React;
+const { Link } = ReactRouterDOM;
 
 export function TodoFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
@@ -57,17 +58,16 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
           id="importance"
           name="importance"
         />
-        <select
-          name="todoStatus"
-          value={todoStatus}
-          onChange={handleChange}
-        >
+        <select name="todoStatus" value={todoStatus} onChange={handleChange}>
           <option value={"all"}>All</option>
           <option value={"active"}>Active</option>
           <option value={"done"}>Done</option>
         </select>
         <button hidden>Set Filter</button>
       </form>
+      <Link to="/todo/edit" className="btn">
+        Add Todo
+      </Link>
     </section>
   );
 }
