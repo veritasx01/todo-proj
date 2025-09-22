@@ -16,7 +16,7 @@
 }
 
 a.active {
-  color: rgb(241, 212, 241);
+  color: #fff;
   font-weight: 600;
   text-decoration: underline;
 }
