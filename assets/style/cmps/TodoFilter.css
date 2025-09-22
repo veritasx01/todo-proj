@@ -1,5 +1,12 @@
 .todo-filter {
-  background-color: var(--clr2bg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 1em;
   margin: 1em 0;
+  gap: 0.5em;
+}
+
+.todo-filter > .btn {
+  margin: 0px;
 }

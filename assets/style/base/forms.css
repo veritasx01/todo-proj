@@ -5,8 +5,8 @@ button,
   color: white;
   margin: 0.5em;
   border: 0;
-  padding: 0.5em 0.8em;
-  border-radius: 4px;
+  padding: 0.5em 0.6em;
+  border-radius: 10px;
 }
 
 button:hover,
