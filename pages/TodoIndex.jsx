@@ -17,20 +17,8 @@ const { useEffect } = React;
 const { useSearchParams } = ReactRouterDOM;
 
 export function TodoIndex() {
-  const todos = useSelector((state) => state.todoModule.todos);
-  const isLoading = useSelector((state) => state.loadingModule.loading);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    const defaultFilter = todoService.getFilterFromSearchParams(searchParams);
-    setFilterBy(defaultFilter);
-    setIsLoading(true);
-    queryTodos(defaultFilter).then(() => {
-      setIsLoading(false);
-    });
-  }, [searchParams]);
-
-  const filterBy = useSelector((state) => state.filterModule.filterBy);
+  const { todos, isLoading, filterBy } = useTodos(searchParams);
 
   function onRemoveTodo(todoId) {
     if (!confirm(`delete todo with id: (${todoId})?`)) return;
@@ -42,11 +30,11 @@ export function TodoIndex() {
     const todoToSave = { ...todo, isDone: !todo.isDone };
     saveTodo(todoToSave);
   }
-  
+
   if (isLoading) {
     return (
       <div className="flex align-center justify-center max-h">
-        <div className="loader"></div>
+        <div className="loader" />
       </div>
     );
   }
@@ -71,4 +59,21 @@ export function TodoIndex() {
       </div>
     </section>
   );
+}
+
+export function useTodos(searchParams) {
+  const todos = useSelector((state) => state.todoModule.todos);
+  const isLoading = useSelector((state) => state.loadingModule.loading);
+  const filterBy = useSelector((state) => state.filterModule.filterBy);
+
+  useEffect(() => {
+    const defaultFilter = todoService.getFilterFromSearchParams(searchParams);
+    setFilterBy(defaultFilter);
+    setIsLoading(true);
+    queryTodos(defaultFilter).finally(() => {
+      setIsLoading(false);
+    });
+  }, [searchParams]);
+
+  return { todos, isLoading, filterBy };
 }
